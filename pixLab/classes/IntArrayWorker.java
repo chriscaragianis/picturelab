@@ -8,30 +8,10 @@ public class IntArrayWorker
   /*8 Get largest **/
   public int getLargest()
   {
-    int count = matrix[0][0];
-    for (int i = 0; i < matrix.length; i++)
-    {
-      for (int j = 0; j < matrix[0].length; j++)
-      {
-        if (matrix[i][j] > count)
-          count = matrix[i][j];
-      }
-    }
-    return count;
   }
   /** Get count **/
   public int getCount(int number)
   {
-    int count = 0;
-    for (int i = 0; i < matrix.length; i++)
-    {
-      for (int j = 0; j < matrix[0].length; j++)
-      {
-        if (matrix[i][j] == number)
-          count++;
-      }
-    }
-    return count;
   }
   
   /** set the matrix to the passed one
@@ -48,15 +28,6 @@ public class IntArrayWorker
    */
   public int getTotal()
   {
-    int total = 0;
-    for (int row = 0; row < matrix.length; row++)
-    {
-      for (int col = 0; col < matrix[0].length; col++)
-      {
-        total = total + matrix[row][col];
-      }
-    }
-    return total;
   }
   
   /**
@@ -65,15 +36,6 @@ public class IntArrayWorker
    */
   public int getTotalNested()
   {
-    int total = 0;
-    for (int[] rowArray : matrix)
-    {
-      for (int item : rowArray)
-      {
-        total = total + item;
-      }
-    }
-    return total;
   }
   
   /**
@@ -81,16 +43,6 @@ public class IntArrayWorker
    */
   public void fillCount()
   {
-    int numCols = matrix[0].length;
-    int count = 1;
-    for (int row = 0; row < matrix.length; row++)
-    {
-      for (int col = 0; col < numCols; col++)
-      {
-        matrix[row][col] = count;
-        count++;
-      }
-    }
   }
   
   /**
@@ -98,15 +50,6 @@ public class IntArrayWorker
    */
   public void print()
   {
-    for (int row = 0; row < matrix.length; row++)
-    {
-      for (int col = 0; col < matrix[0].length; col++)
-      {
-        System.out.print( matrix[row][col] + " " );
-      }
-      System.out.println();
-    }
-    System.out.println();
   }
   
   
@@ -115,19 +58,6 @@ public class IntArrayWorker
    */
   public void fillPattern1()
   {
-    for (int row = 0; row < matrix.length; row++)
-    {
-      for (int col = 0; col < matrix[0].length; 
-           col++)
-      {
-        if (row < col)
-          matrix[row][col] = 1;
-        else if (row == col)
-          matrix[row][col] = 2;
-        else
-          matrix[row][col] = 3;
-      }
-    }
   }
  
 }
