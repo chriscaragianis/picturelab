@@ -11,7 +11,7 @@ import java.awt.Color;
  * 
  * @author Barb Ericson ericson@cc.gatech.edu
  */
-public class Pixel
+public class Pixel implements Cloneable
 {
   
   ////////////////////////// fields ///////////////////////////////////

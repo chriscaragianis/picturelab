@@ -39,6 +39,14 @@ public class PictureTester
     beach.grayscale();
     beach.explore();
   }
+
+  public static void testrandomize(){
+    Picture beach = new Picture("beach.jpg");
+    beach.explore();
+    beach.randomize();
+    beach.explore();
+  }
+
     
   /** Method to test mirrorVertical */
   public static void testMirrorVertical()
@@ -82,13 +90,13 @@ public class PictureTester
     // and comment out the ones you don't want
     // to run
     //testnegate();
-    testgrayscale();
+    //testgrayscale();
     //testKeepOnlyBlue();
     //testKeepOnlyRed();
     //testKeepOnlyGreen();
     //testNegate();
     //testGrayscale();
-    testFixUnderwater();
+    //testFixUnderwater();
     //testMirrorVertical();
     //testMirrorTemple();
     //testMirrorArms();
@@ -104,5 +112,6 @@ public class PictureTester
     //testSetRedToHalfValueInTopHalf();
     //testClearBlueOverValue(200);
     //testGetAverageForColumn(0);
+    testrandomize();
   }
 }

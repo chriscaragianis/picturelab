@@ -97,55 +97,60 @@ public class Picture extends SimplePicture
       }
     }
   }
-  public void negate()
-  {
+
+  private ArrayList<Integer> row_labels;
+  private ArrayList<Integer> col_labels;
+
+  private void reset_row_labels() {
     Pixel[][] pixels = this.getPixels2D();
-    for (Pixel[] rowArray : pixels)
-    {
-      for (Pixel pixelObj : rowArray)
-      {
-        pixelObj.setBlue(255-pixelObj.getBlue());
-        pixelObj.setGreen(255-pixelObj.getGreen());
-        pixelObj.setRed(255-pixelObj.getRed());
-      }
+    row_labels = new ArrayList<Integer>();
+    for (int i = 0; i < pixels.length; i++) {
+      row_labels.add(i);
     }
   }
+  private void reset_col_labels() {
+    Pixel[][] pixels = this.getPixels2D();
+    col_labels = new ArrayList<Integer>();
+    for (int i = 0; i < pixels[0].length; i++) {
+      col_labels.add(i);
+    }
+  }
+
+  public void randomize() {
+    Pixel[][] pixels = this.getPixels2D();
+    Pixel[][] old_pixels = pixels.clone();
+    Random rand = new Random();
+    reset_row_labels();
+    reset_col_labels();
+    //get new row order
+    for (int i = 0; i < pixels.length; i++) {
+      int new_row  = row_labels.remove(rand.nextInt(row_labels.size()));
+      for (int j = 0; j < pixels[0].length; j++) {
+        int number = col_labels.remove(rand.nextInt(col_labels.size()));
+        pixels[i][j].setColor(old_pixels[new_row][number].getColor());
+      }
+      reset_col_labels();
+    }
+    for (int i = 0; i < pixels[0].length; i++) {
+      int new_col= col_labels.remove(rand.nextInt(col_labels.size()));
+      for (int j = 0; j < pixels.length; j++) {
+        int number = row_labels.remove(rand.nextInt(row_labels.size()));
+        pixels[i][j].setColor(old_pixels[number][new_col].getColor());
+      }
+      reset_col_labels();
+    }
+    System.out.println("Done");
+  
+  }
+  public void negate()
+  {
+  }
+
   public void fixUnderwater() {
-   Pixel[][] pixels = this.getPixels2D();
-   for (Pixel[] rowArray : pixels)
-    {
-      for (Pixel pixelObj : rowArray)
-        {
-         if (pixelObj.getBlue() > pixelObj.getGreen())
-         {
-           pixelObj.setBlue(255);
-           pixelObj.setRed(255);
-           pixelObj.setGreen(255);
-         }
-         else
-         {
-           
-           pixelObj.setBlue(0);
-           pixelObj.setRed(0);
-           pixelObj.setGreen(0);
-         }
-        }
-    }  
-   }
+    }
   
    public void grayscale()
   {
-    Pixel[][] pixels = this.getPixels2D();
-    for (Pixel[] rowArray : pixels)
-    {
-      for (Pixel pixelObj : rowArray)
-      {
-        int avg = (pixelObj.getRed() + pixelObj.getBlue() + pixelObj.getGreen())/3;
-        pixelObj.setBlue(avg);
-        pixelObj.setGreen(avg);
-        pixelObj.setRed(avg);
-      }
-    }
   }
   
   /** Method that mirrors the picture around a 
@@ -153,43 +158,11 @@ public class Picture extends SimplePicture
     * from left to right */
   public void mirrorVertical()
   {
-    Pixel[][] pixels = this.getPixels2D();
-    Pixel leftPixel = null;
-    Pixel rightPixel = null;
-    int width = pixels[0].length;
-    for (int row = 0; row < pixels.length; row++)
-    {
-      for (int col = 0; col < width / 2; col++)
-      {
-        leftPixel = pixels[row][col];
-        rightPixel = pixels[row][width - 1 - col];
-        rightPixel.setColor(leftPixel.getColor());
-      }
-    } 
   }
   
   /** Mirror just part of a picture of a temple */
   public void mirrorTemple()
   {
-    int mirrorPoint = 276;
-    Pixel leftPixel = null;
-    Pixel rightPixel = null;
-    int count = 0;
-    Pixel[][] pixels = this.getPixels2D();
-    
-    // loop through the rows
-    for (int row = 27; row < 97; row++)
-    {
-      // loop from 13 to just before the mirror point
-      for (int col = 13; col < mirrorPoint; col++)
-      {
-        
-        leftPixel = pixels[row][col];      
-        rightPixel = pixels[row]                       
-                         [mirrorPoint - col + mirrorPoint];
-        rightPixel.setColor(leftPixel.getColor());
-      }
-    }
   }
   
   /** copy from the passed fromPic to the
