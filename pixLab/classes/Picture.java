@@ -7,29 +7,29 @@ import java.util.*;
 import java.util.List; // resolves problem with java.awt.List and java.util.List
 
 /**
- * A class that represents a picture.  This class inherits from 
+ * A class that represents a picture.  This class inherits from
  * SimplePicture and allows the student to add functionality to
- * the Picture class.  
- * 
+ * the Picture class.
+ *
  * @author Barbara Ericson ericson@cc.gatech.edu
  */
-public class Picture extends SimplePicture 
+public class Picture extends SimplePicture
 {
   ///////////////////// constructors //////////////////////////////////
-  
+
   /**
-   * Constructor that takes no arguments 
+   * Constructor that takes no arguments
    */
   public Picture ()
   {
     /* not needed but use it to show students the implicit call to super()
-     * child constructors always call a parent constructor 
+     * child constructors always call a parent constructor
      */
-    super();  
+    super();
   }
-  
+
   /**
-   * Constructor that takes a file name and creates the picture 
+   * Constructor that takes a file name and creates the picture
    * @param fileName the name of the file to create the picture from
    */
   public Picture(String fileName)
@@ -37,7 +37,7 @@ public class Picture extends SimplePicture
     // let the parent class handle this fileName
     super(fileName);
   }
-  
+
   /**
    * Constructor that takes the width and height
    * @param height the height of the desired picture
@@ -48,9 +48,9 @@ public class Picture extends SimplePicture
     // let the parent class handle this width and height
     super(width,height);
   }
-  
+
   /**
-   * Constructor that takes a picture and creates a 
+   * Constructor that takes a picture and creates a
    * copy of that picture
    * @param copyPicture the picture to copy
    */
@@ -59,7 +59,7 @@ public class Picture extends SimplePicture
     // let the parent class do the copy
     super(copyPicture);
   }
-  
+
   /**
    * Constructor that takes a buffered image
    * @param image the buffered image to use
@@ -68,9 +68,9 @@ public class Picture extends SimplePicture
   {
     super(image);
   }
-  
+
   ////////////////////// methods ///////////////////////////////////////
-  
+
   /**
    * Method to return a string with information about this picture.
    * @return a string with information about the picture such as fileName,
@@ -78,13 +78,13 @@ public class Picture extends SimplePicture
    */
   public String toString()
   {
-    String output = "Picture, filename " + getFileName() + 
-      " height " + getHeight() 
+    String output = "Picture, filename " + getFileName() +
+      " height " + getHeight()
       + " width " + getWidth();
     return output;
-    
+
   }
-  
+
   /** Method to set the blue to 0 */
   public void zeroBlue()
   {
@@ -140,31 +140,39 @@ public class Picture extends SimplePicture
       reset_col_labels();
     }
     System.out.println("Done");
-  
+
   }
   public void negate()
   {
+    Pixel[][] pixels = this.getPixels2D();
+    for (Pixel[] rowArray : pixels) {
+      for (Pixel pixelObj : rowArray) {
+        pixelObj.setBlue(255 - pixelObj.getBlue());
+        pixelObj.setRed(255 - pixelObj.getRed());
+        pixelObj.setGreen(255 - pixelObj.getGreen());
+      }
+    }
   }
 
   public void fixUnderwater() {
     }
-  
+
    public void grayscale()
   {
   }
-  
-  /** Method that mirrors the picture around a 
+
+  /** Method that mirrors the picture around a
     * vertical mirror in the center of the picture
     * from left to right */
   public void mirrorVertical()
   {
   }
-  
+
   /** Mirror just part of a picture of a temple */
   public void mirrorTemple()
   {
   }
-  
+
   /** copy from the passed fromPic to the
     * specified startRow and startCol in the
     * current picture
@@ -172,28 +180,28 @@ public class Picture extends SimplePicture
     * @param startRow the start row to copy to
     * @param startCol the start col to copy to
     */
-  public void copy(Picture fromPic, 
+  public void copy(Picture fromPic,
                  int startRow, int startCol)
   {
     Pixel fromPixel = null;
     Pixel toPixel = null;
     Pixel[][] toPixels = this.getPixels2D();
     Pixel[][] fromPixels = fromPic.getPixels2D();
-    for (int fromRow = 0, toRow = startRow; 
+    for (int fromRow = 0, toRow = startRow;
          fromRow < fromPixels.length &&
-         toRow < toPixels.length; 
+         toRow < toPixels.length;
          fromRow++, toRow++)
     {
-      for (int fromCol = 0, toCol = startCol; 
+      for (int fromCol = 0, toCol = startCol;
            fromCol < fromPixels[0].length &&
-           toCol < toPixels[0].length;  
+           toCol < toPixels[0].length;
            fromCol++, toCol++)
       {
         fromPixel = fromPixels[fromRow][fromCol];
         toPixel = toPixels[toRow][toCol];
         toPixel.setColor(fromPixel.getColor());
       }
-    }   
+    }
   }
 
   /** Method to create a collage of several pictures */
@@ -212,9 +220,9 @@ public class Picture extends SimplePicture
     this.mirrorVertical();
     this.write("collage.jpg");
   }
-  
-  
-  /** Method to show large changes in color 
+
+
+  /** Method to show large changes in color
     * @param edgeDist the distance for finding edges
     */
   public void edgeDetection(int edgeDist)
@@ -225,13 +233,13 @@ public class Picture extends SimplePicture
     Color rightColor = null;
     for (int row = 0; row < pixels.length; row++)
     {
-      for (int col = 0; 
+      for (int col = 0;
            col < pixels[0].length-1; col++)
       {
         leftPixel = pixels[row][col];
         rightPixel = pixels[row][col+1];
         rightColor = rightPixel.getColor();
-        if (leftPixel.colorDistance(rightColor) > 
+        if (leftPixel.colorDistance(rightColor) >
             edgeDist)
           leftPixel.setColor(Color.BLACK);
         else
@@ -239,17 +247,17 @@ public class Picture extends SimplePicture
       }
     }
   }
-  
-  
-  /* Main method for testing - each class in Java can have a main 
-   * method 
+
+
+  /* Main method for testing - each class in Java can have a main
+   * method
    */
-  public static void main(String[] args) 
+  public static void main(String[] args)
   {
     Picture beach = new Picture("beach.jpg");
     beach.explore();
     beach.zeroBlue();
     beach.explore();
   }
-  
+
 } // this } is the end of class Picture, put all new methods before this
